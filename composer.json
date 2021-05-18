@@ -1,0 +1,22 @@
+{
+    "name": "lefodeurcou/crazy-router",
+    "description": "A fast router wit great possibilities",
+    "type": "package",
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "phpbench/phpbench": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Le Fodeur Cou",
+            "email": "no@email.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Crazy\\": "core/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
