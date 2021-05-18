@@ -1,0 +1,18 @@
+<FilesMatch "^\.ht">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+
+DirectoryIndex index.html index.htm index.php /index.php
+
+Options -MultiViews
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} -F
+RewriteRule .* - [S=1]
+
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ %{REQUEST_URI}/ [L,R]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

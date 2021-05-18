@@ -14,7 +14,7 @@ class Router
 
 	function __construct()
 	{
-		
+		echo $_SERVER['PHP_SELF'];
 	}
 
 	public function getAllRoutes(): array
