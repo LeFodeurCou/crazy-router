@@ -150,6 +150,38 @@ final class RouterTest extends TestCase
 					'name'		=>	'testName',
 				]
 			],
+			'get pattern set 01' => [
+				Crazy\Router::GET,
+				'/{type}/{id}',
+				function () {},
+				[
+					'[a-zA-Z]+',
+					'[1-9]+'
+				],
+				'testName',
+				[
+					'method'	=>	Crazy\Router::GET,
+					'route'		=>	'/[a-zA-Z]+/[1-9]+',
+					'callable'	=>	function () {},
+					'name'		=>	'testName',
+				]
+			],
+			'get pattern set 02' => [
+				Crazy\Router::GET,
+				'/{type}/test/{id}',
+				function () {},
+				[
+					'[a-zA-Z]+',
+					'[1-9]+'
+				],
+				'testName',
+				[
+					'method'	=>	Crazy\Router::GET,
+					'route'		=>	'/[a-zA-Z]+/test/[1-9]+',
+					'callable'	=>	function () {},
+					'name'		=>	'testName',
+				]
+			],
 		];
 	}
 }

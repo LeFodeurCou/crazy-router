@@ -22,11 +22,20 @@ class Router
 		return $this->routes;
 	}
 
-	public function addRoute(int $method, string $route = null, callable $callable = null, array $patterns = [], string $name = null)
+	public function addRoute(
+		int $method,
+		string $route = null,
+		callable $callable = null,
+		array $patterns = [],
+		string $name = null
+	)
 	{
+		$masks = [];
+		foreach ($patterns as $pattern) 
+			$masks[] = '#{[\s\S]+?}#';
 		$this->routes[] = [
 			'method'	=>	$method,
-			'route'		=>	preg_replace(['#{[\s\S]*?}#'], $patterns, $route),
+			'route'		=>	preg_replace($masks, $patterns, $route, 1),
 			'callable'	=>	$callable,
 			'name'		=>	$name,
 		];
