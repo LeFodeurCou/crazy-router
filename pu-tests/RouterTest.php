@@ -30,12 +30,12 @@ final class RouterTest extends TestCase
 		$arraySrc = $this->router->getAllRoutes();
 		$lastIndex = count($arraySrc) - 1;
 		$arraySrc[$lastIndex]['method'] = Crazy\Router::POST;
-		$arraySrc[$lastIndex]['route'] = '';
+		$arraySrc[$lastIndex]['pattern'] = '';
 		$arraySrc[$lastIndex]['callable'] = null;
 		$arraySrc[$lastIndex]['name'] = 'nameTest';
 		$arrayDest = $this->router->getAllRoutes();
 		$this->assertNotEquals($arraySrc[$lastIndex]['method'], $arrayDest[$lastIndex]['method']);
-		$this->assertNotEquals($arraySrc[$lastIndex]['route'], $arrayDest[$lastIndex]['route']);
+		$this->assertNotEquals($arraySrc[$lastIndex]['pattern'], $arrayDest[$lastIndex]['pattern']);
 		$this->assertNotEquals($arraySrc[$lastIndex]['callable'], $arrayDest[$lastIndex]['callable']);
 		$this->assertNotEquals($arraySrc[$lastIndex]['name'], $arrayDest[$lastIndex]['name']);
 	}
@@ -60,7 +60,7 @@ final class RouterTest extends TestCase
 		{
 			/** TODO assertEquals are not always the good assertion (function and array at least) */
 			$this->assertEquals($arraySrc[$lastIndex]['method'], $expected['method']);
-			$this->assertEquals($arraySrc[$lastIndex]['route'], $expected['route']);
+			$this->assertEquals($arraySrc[$lastIndex]['pattern'], $expected['pattern']);
 			$this->assertEquals($arraySrc[$lastIndex]['callable'], $expected['callable']);
 			$this->assertEquals($arraySrc[$lastIndex]['name'], $expected['name']);
 		}
@@ -93,7 +93,7 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::GET,
-					'route'		=>	'/',
+					'pattern'		=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 				]
@@ -106,7 +106,7 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::POST,
-					'route'		=>	'/',
+					'pattern'		=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 				]
@@ -119,7 +119,7 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::PUT,
-					'route'		=>	'/',
+					'pattern'		=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 				]
@@ -132,7 +132,7 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::PATCH,
-					'route'		=>	'/',
+					'pattern'		=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 				]
@@ -145,7 +145,7 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::DELETE,
-					'route'		=>	'/',
+					'pattern'		=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 				]
@@ -161,7 +161,7 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::GET,
-					'route'		=>	'/[a-zA-Z]+/[1-9]+',
+					'pattern'		=>	'/[a-zA-Z]+/[1-9]+',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 				]
@@ -177,7 +177,7 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::GET,
-					'route'		=>	'/[a-zA-Z]+/test/[1-9]+',
+					'pattern'		=>	'/[a-zA-Z]+/test/[1-9]+',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 				]

@@ -14,7 +14,7 @@ class Router
 
 	function __construct()
 	{
-		echo $_SERVER['PHP_SELF'];
+		
 	}
 
 	public function getAllRoutes(): array
@@ -35,9 +35,17 @@ class Router
 			$masks[] = '#{[\s\S]+?}#';
 		$this->routes[] = [
 			'method'	=>	$method,
-			'route'		=>	preg_replace($masks, $patterns, $route, 1),
+			'pattern'	=>	preg_replace($masks, $patterns, $route, 1),
 			'callable'	=>	$callable,
 			'name'		=>	$name,
 		];
+	}
+
+	public function run()
+	{
+		if (isset($_SERVER['REQUEST_URI']))
+			foreach ($this->routes as $route)
+				if (preg_match('~^' . $route['pattern'] . '/?$~', $_SERVER['REQUEST_URI']))
+					$route['callable']();
 	}
 }
