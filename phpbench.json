@@ -1,9 +1,9 @@
 {
-    "php_disable_ini": true,
-    "bootstrap": "vendor/autoload.php",
-    "path": "b-tests",
-    "php_config": {
+    "runner.php_disable_ini": true,
+    "runner.bootstrap": "vendor/autoload.php",
+    "runner.path": "b-tests",
+    "runner.php_config": {
         "extension": [ "json.so" ]
     },
-    "time_unit": "milliseconds"
+    "runner.time_unit": "milliseconds"
 }
