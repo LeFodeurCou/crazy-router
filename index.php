@@ -7,24 +7,34 @@
 
 	$router = new Crazy\Router();
 
-	$basicRouteCallable = function ()
+	$basicRouteCallable = function ($params)
 	{
 		echo 'This route is registered !';
 	};
 
-	$patternRouteCallable = function ()
+	$patternRouteCallable = function ($params)
 	{
-		echo 'This route is registered with pattern !';
+		echo 'This route is registered with pattern !<br />';
+		if (isset($params['path']))
+			echo $params['path'] . '<br />';
+		if (isset($params['token']))
+			echo $params['token'] . '<br />';
+	};
+
+	$isNotARoute = function ()
+	{
+		echo '404 error';
 	};
 
 	$router->addRoute(Crazy\Router::GET, '/test', $basicRouteCallable);
 	$router->addRoute(Crazy\Router::GET, '/', $basicRouteCallable);
 	$router->addRoute(Crazy\Router::GET, '/{id}', $patternRouteCallable, [
-		'[0-9]+'
-	]);$router->addRoute(Crazy\Router::GET, '/{path}/test/{token}', $patternRouteCallable, [
+		'[0-9]+',
+	]);
+	$router->addRoute(Crazy\Router::GET, '/{path}/test/{token}', $patternRouteCallable, [
 		'[a-zA-Z]+',
-		'[a-zA-Z0-9]+'
+		'[a-zA-Z0-9]+',
 	]);
 
-	$router->run();
+	$router->run($isNotARoute);
 ?>

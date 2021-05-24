@@ -12,11 +12,6 @@ class Router
 
 	private array $routes = [];
 
-	function __construct()
-	{
-		
-	}
-
 	public function getAllRoutes(): array
 	{
 		return $this->routes;
@@ -31,21 +26,45 @@ class Router
 	)
 	{
 		$masks = [];
-		foreach ($patterns as $pattern) 
-			$masks[] = '#{[\s\S]+?}#';
+		foreach ($patterns as &$pattern)
+		{
+			$masks[] = '#{([\s\S]+?)}#';
+			$pattern = '(' . $pattern . ')';
+		}
+		
+		$matches = [];
+		$params = [];
+		preg_match_all('#{([\s\S]+?)}#', $route, $matches);
+		foreach ($matches[1] as $match)
+			$params[$match] = null;
+
 		$this->routes[] = [
 			'method'	=>	$method,
 			'pattern'	=>	preg_replace($masks, $patterns, $route, 1),
 			'callable'	=>	$callable,
 			'name'		=>	$name,
+			'params'	=>	$params
 		];
 	}
 
-	public function run()
+	/** TODO change $route['callable']($route) for $route['callable']($param)
+	 * and make $param with good corresponding args (like adding 'params' => preg_match in addRoute)
+	*/
+	public function run(callable $default = null)
 	{
 		if (isset($_SERVER['REQUEST_URI']))
 			foreach ($this->routes as $route)
-				if (preg_match('~^' . $route['pattern'] . '/?$~', $_SERVER['REQUEST_URI']))
-					$route['callable']();
+			{
+				$matches = [];
+				if (preg_match_all('~^' . $route['pattern'] . '/?$~', $_SERVER['REQUEST_URI'], $matches))
+				{
+					array_shift($matches);
+					foreach ($route['params'] as $key => $param)
+						$route['params'][$key] = array_shift($matches)[0];
+					$route['callable']($route['params']) || exit;
+				}
+			}
+		if ($default)
+			$default();
 	}
 }

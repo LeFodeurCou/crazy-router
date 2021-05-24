@@ -43,6 +43,22 @@ final class RouterTest extends TestCase
 	/**
 	 * @dataProvider addManyRouteProvider
 	 */
+	public function testIsAddRouteWorks(
+		int $method,
+		string $route = null,
+		callable $callable = null,
+		array $patterns = [],
+		string $name = null,
+		array $expected = []
+	)
+	{
+		$this->router->addRoute($method, $route, $callable, $patterns, $name);
+		$this->assertNotEmpty($this->router->getAllRoutes());
+	}
+
+	/**
+	 * @dataProvider addManyRouteProvider
+	 */
 	public function testGetAllRoutesResultIsGood(
 		int $method,
 		string $route = null,
@@ -63,24 +79,14 @@ final class RouterTest extends TestCase
 			$this->assertEquals($arraySrc[$lastIndex]['pattern'], $expected['pattern']);
 			$this->assertEquals($arraySrc[$lastIndex]['callable'], $expected['callable']);
 			$this->assertEquals($arraySrc[$lastIndex]['name'], $expected['name']);
+			$this->assertTrue($arraySrc[$lastIndex]['params'] === $expected['params']);
 		}
 	}
 
-	/**
-	 * @dataProvider addManyRouteProvider
-	 */
-	public function testIsAddRouteWorks(
-		int $method,
-		string $route = null,
-		callable $callable = null,
-		array $patterns = [],
-		string $name = null,
-		array $expected = []
-	)
-	{
-		$this->router->addRoute($method, $route, $callable, $patterns, $name);
-		$this->assertNotEmpty($this->router->getAllRoutes());
-	}
+	// public function testIsNotARoute()
+	// {
+
+	// }
 
 	public function addManyRouteProvider(): array
 	{
@@ -93,9 +99,10 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::GET,
-					'pattern'		=>	'/',
+					'pattern'	=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
+					'params'	=>	[],
 				]
 			],
 			'post set' => [
@@ -106,9 +113,10 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::POST,
-					'pattern'		=>	'/',
+					'pattern'	=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
+					'params'	=>	[],
 				]
 			],
 			'put set' => [
@@ -119,9 +127,10 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::PUT,
-					'pattern'		=>	'/',
+					'pattern'	=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
+					'params'	=>	[],
 				]
 			],
 			"patch set" => [
@@ -132,9 +141,10 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::PATCH,
-					'pattern'		=>	'/',
+					'pattern'	=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
+					'params'	=>	[],
 				]
 			],
 			'delete set' => [
@@ -145,9 +155,10 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::DELETE,
-					'pattern'		=>	'/',
+					'pattern'	=>	'/',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
+					'params'	=>	[],
 				]
 			],
 			'get pattern set 01' => [
@@ -161,9 +172,13 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::GET,
-					'pattern'		=>	'/[a-zA-Z]+/[1-9]+',
+					'pattern'	=>	'/([a-zA-Z]+)/([1-9]+)',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
+					'params'	=>	[
+						'type'	=>	null,
+						'id'	=>	null,
+					],
 				]
 			],
 			'get pattern set 02' => [
@@ -177,9 +192,13 @@ final class RouterTest extends TestCase
 				'testName',
 				[
 					'method'	=>	Crazy\Router::GET,
-					'pattern'		=>	'/[a-zA-Z]+/test/[1-9]+',
+					'pattern'	=>	'/([a-zA-Z]+)/test/([1-9]+)',
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
+					'params'	=>	[
+						'type'	=>	null,
+						'id'	=>	null,
+					],
 				]
 			],
 		];
