@@ -19,6 +19,8 @@
 			echo $params['path'] . '<br />';
 		if (isset($params['token']))
 			echo $params['token'] . '<br />';
+		if (isset($params['id']))
+			echo $params['id'] . '<br />';
 	};
 
 	$isNotARoute = function ()

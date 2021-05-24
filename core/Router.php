@@ -52,18 +52,16 @@ class Router
 	*/
 	public function run(callable $default = null)
 	{
+		$matches = [];
 		if (isset($_SERVER['REQUEST_URI']))
 			foreach ($this->routes as $route)
-			{
-				$matches = [];
 				if (preg_match_all('~^' . $route['pattern'] . '/?$~', $_SERVER['REQUEST_URI'], $matches))
 				{
 					array_shift($matches);
-					foreach ($route['params'] as $key => $param)
-						$route['params'][$key] = array_shift($matches)[0];
+					foreach ($route['params'] as &$param)
+						$param = array_shift($matches)[0];
 					$route['callable']($route['params']) || exit;
 				}
-			}
 		if ($default)
 			$default();
 	}
