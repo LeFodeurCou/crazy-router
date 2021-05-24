@@ -19,8 +19,8 @@ class Router
 
 	public function addRoute(
 		int $method,
-		string $route = null,
-		callable $callable = null,
+		string $route,
+		callable $callable,
 		array $patterns = [],
 		string $name = null
 	)
@@ -47,9 +47,6 @@ class Router
 		];
 	}
 
-	/** TODO change $route['callable']($route) for $route['callable']($param)
-	 * and make $param with good corresponding args (like adding 'params' => preg_match in addRoute)
-	*/
 	public function run(callable $default = null)
 	{
 		$matches = [];

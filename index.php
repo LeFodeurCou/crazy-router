@@ -37,6 +37,10 @@
 		'[a-zA-Z]+',
 		'[a-zA-Z0-9]+',
 	]);
+	$router->addRoute(Crazy\Router::GET, '/{some}/{test}', $patternRouteCallable, [
+		'[0-9]+',
+		'[a-zA-Z0-9]+',
+	]);
 
 	$router->run($isNotARoute);
 ?>
