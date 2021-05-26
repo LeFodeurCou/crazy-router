@@ -44,7 +44,7 @@ final class RouterTest extends TestCase
 	 * @dataProvider addManyRouteProvider
 	 */
 	public function testIsAddRouteWorks(
-		int $method,
+		string $method,
 		string $route = null,
 		callable $callable = null,
 		array $patterns = [],
@@ -60,7 +60,7 @@ final class RouterTest extends TestCase
 	 * @dataProvider addManyRouteProvider
 	 */
 	public function testGetAllRoutesResultIsGood(
-		int $method,
+		string $method,
 		string $route = null,
 		callable $callable = null,
 		array $patterns = [],
@@ -83,10 +83,43 @@ final class RouterTest extends TestCase
 		}
 	}
 
-	// public function testIsNotARoute()
-	// {
+	/**
+     * @runInSeparateProcess
+     */
+	public function testRun()
+	{
+		$testVar = '';
 
-	// }
+		$testFunc = function ($params) use (&$testVar)
+		{
+			$testVar = 'Done';
+		};
+
+		$this->router->addRoute(Crazy\Router::GET, '/testRun', $testFunc);
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['REQUEST_URI'] = '/testRun';
+		$this->router->run();
+		$this->assertEquals($testVar, 'Done');
+	}
+
+	/**
+     * @runInSeparateProcess
+     */
+	public function testRunMethodNotAllowed()
+	{
+		$testVar = '';
+
+		$testFunc = function ($params) use (&$testVar)
+		{
+			$testVar = 'Done';
+		};
+
+		$this->router->addRoute(Crazy\Router::GET, '/testRun', $testFunc);
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_SERVER['REQUEST_URI'] = '/testRun';
+		$this->router->run();
+		$this->assertNotEquals($testVar, 'Done');
+	}
 
 	public function addManyRouteProvider(): array
 	{
@@ -176,8 +209,8 @@ final class RouterTest extends TestCase
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 					'params'	=>	[
-						'type'	=>	null,
-						'id'	=>	null,
+						'type',
+						'id',
 					],
 				]
 			],
@@ -196,8 +229,8 @@ final class RouterTest extends TestCase
 					'callable'	=>	function () {},
 					'name'		=>	'testName',
 					'params'	=>	[
-						'type'	=>	null,
-						'id'	=>	null,
+						'type',
+						'id',
 					],
 				]
 			],
