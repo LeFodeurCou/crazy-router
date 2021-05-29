@@ -41,15 +41,12 @@
 		'[0-9]+',
 		'[a-zA-Z0-9]+',
 	]);
-	// $router->addRoute(Crazy\Router::GET, '/{user}', $patternRouteCallable, [
-	// 	'[a-zA-Z]+',
-	// ]);
 	$router->addRoute(Crazy\Router::GET, '/{user}/{id}', $patternRouteCallable, [
 		'[a-zA-Z]+',
 		'[0-9]+',
 	]);
-	$router->addRoute(Crazy\Router::GET, '/users', $patternRouteCallable);
-	$router->addRoute(Crazy\Router::POST, '/post', $patternRouteCallable);
+	$router->addRoute(Crazy\Router::GET, '/users', $basicRouteCallable);
+	$router->addRoute(Crazy\Router::POST, '/post', $basicRouteCallable);
 
 	$router->run($isNotARoute);
 ?>

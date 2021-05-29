@@ -52,11 +52,7 @@ class Router
 				if (preg_match_all('~^' . $route['pattern'] . '/?$~', $_SERVER['REQUEST_URI'], $matches))
 				{
 					if ($_SERVER['REQUEST_METHOD'] != $route['method'])
-					{
-						header((isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1').' 405 Method Not Allowed', true, 405);
-						return;
-						// die();
-					}
+						return header((isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1').' 405 Method Not Allowed', true, 405);
 					array_shift($matches);
 					$params = [];
 					foreach ($route['params'] as $param)

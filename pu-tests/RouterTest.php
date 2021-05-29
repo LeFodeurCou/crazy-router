@@ -1,7 +1,15 @@
 <?php declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+class testMethod
+{
+	public $testedValue = '';
 
+	public function testedMethod($params)
+	{
+		$this->testedValue = 'Done';
+	}
+}
 final class RouterTest extends TestCase
 {
 	private $router;
@@ -87,7 +95,7 @@ final class RouterTest extends TestCase
      * @runInSeparateProcess
 	 * @dataProvider methodProvider
      */
-	public function testRunGET(string $crazyMethod, string $httpMethod)
+	public function testRun(string $crazyMethod, string $httpMethod)
 	{
 		$testVar = '';
 
@@ -104,6 +112,25 @@ final class RouterTest extends TestCase
 			$this->assertEquals($testVar, 'Done');
 		else
 			$this->assertNotEquals($testVar, 'Done');
+	}
+
+
+	/**
+     * @runInSeparateProcess
+	 * @dataProvider methodProvider
+     */
+	public function testRunWithObjectMethod(string $crazyMethod, string $httpMethod)
+	{
+		$testObject = new testMethod();
+
+		$this->router->addRoute($crazyMethod, '/testRunWithObject', [$testObject, 'testedMethod']);
+		$_SERVER['REQUEST_METHOD'] = $httpMethod;
+		$_SERVER['REQUEST_URI'] = '/testRunWithObject';
+		$this->router->run();
+		if ($crazyMethod === $httpMethod)
+			$this->assertEquals($testObject->testedValue, 'Done');
+		else
+			$this->assertNotEquals($testObject->testedValue, 'Done');
 	}
 
 	public function methodProvider(): array
