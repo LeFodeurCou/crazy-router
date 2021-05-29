@@ -85,8 +85,9 @@ final class RouterTest extends TestCase
 
 	/**
      * @runInSeparateProcess
+	 * @dataProvider methodProvider
      */
-	public function testRun()
+	public function testRunGET(string $crazyMethod, string $httpMethod)
 	{
 		$testVar = '';
 
@@ -95,30 +96,120 @@ final class RouterTest extends TestCase
 			$testVar = 'Done';
 		};
 
-		$this->router->addRoute(Crazy\Router::GET, '/testRun', $testFunc);
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$this->router->addRoute($crazyMethod, '/testRun', $testFunc);
+		$_SERVER['REQUEST_METHOD'] = $httpMethod;
 		$_SERVER['REQUEST_URI'] = '/testRun';
 		$this->router->run();
-		$this->assertEquals($testVar, 'Done');
+		if ($crazyMethod === $httpMethod)
+			$this->assertEquals($testVar, 'Done');
+		else
+			$this->assertNotEquals($testVar, 'Done');
 	}
 
-	/**
-     * @runInSeparateProcess
-     */
-	public function testRunMethodNotAllowed()
+	public function methodProvider(): array
 	{
-		$testVar = '';
-
-		$testFunc = function ($params) use (&$testVar)
-		{
-			$testVar = 'Done';
-		};
-
-		$this->router->addRoute(Crazy\Router::GET, '/testRun', $testFunc);
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_SERVER['REQUEST_URI'] = '/testRun';
-		$this->router->run();
-		$this->assertNotEquals($testVar, 'Done');
+		return [
+			'get-get set' => [
+				Crazy\Router::GET,
+				'GET',
+			],
+			'post-post set' => [
+				Crazy\Router::POST,
+				'POST',
+			],
+			'put-put set' => [
+				Crazy\Router::PUT,
+				'PUT',
+			],
+			'patch-patch set' => [
+				Crazy\Router::PATCH,
+				'PATCH',
+			],
+			'delete-delete set' => [
+				Crazy\Router::DELETE,
+				'DELETE',
+			],
+			'get-post set' => [
+				Crazy\Router::GET,
+				'POST',
+			],
+			'get-put set' => [
+				Crazy\Router::GET,
+				'PUT',
+			],
+			'get-patch set' => [
+				Crazy\Router::GET,
+				'PATCH',
+			],
+			'get-delete set' => [
+				Crazy\Router::GET,
+				'DELETE',
+			],
+			'post-get set' => [
+				Crazy\Router::POST,
+				'GET',
+			],
+			'post-put set' => [
+				Crazy\Router::POST,
+				'PUT',
+			],
+			'post-patch set' => [
+				Crazy\Router::POST,
+				'PATCH',
+			],
+			'post-delete set' => [
+				Crazy\Router::POST,
+				'DELETE',
+			],
+			'put-get set' => [
+				Crazy\Router::PUT,
+				'GET',
+			],
+			'put-post set' => [
+				Crazy\Router::PUT,
+				'POST',
+			],
+			'put-patch set' => [
+				Crazy\Router::PUT,
+				'PATCH',
+			],
+			'put-delete set' => [
+				Crazy\Router::PUT,
+				'DELTE',
+			],
+			'patch-get set' => [
+				Crazy\Router::PATCH,
+				'GET',
+			],
+			'patch-post set' => [
+				Crazy\Router::PATCH,
+				'POST',
+			],
+			'patch-put set' => [
+				Crazy\Router::PATCH,
+				'PUT',
+			],
+			'patch-delete set' => [
+				Crazy\Router::PATCH,
+				'DELETE',
+			],
+			'delete-get set' => [
+				Crazy\Router::DELETE,
+				'GET',
+			],
+			'delete-post set' => [
+				Crazy\Router::DELETE,
+				'POST',
+			],
+			'delete-put set' => [
+				Crazy\Router::DELETE,
+				'PUT',
+			],
+			'delete-patch set' => [
+				Crazy\Router::DELETE,
+				'PATCH',
+			],
+		];
 	}
 
 	public function addManyRouteProvider(): array
