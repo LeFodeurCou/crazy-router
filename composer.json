@@ -7,6 +7,7 @@
             "email": "lefodeurcou@email.com"
         }
     ],
+    "license": "MIT",
     "type": "package",
     "require": {
         "php": ">=8.0"
