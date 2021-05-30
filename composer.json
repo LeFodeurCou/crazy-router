@@ -1,17 +1,20 @@
 {
     "name": "lefodeurcou/crazy-router",
-    "description": "A fast router wit great possibilities",
+    "description": "A fast router with great possibilities",
+    "authors": [
+        {
+            "name": "Le Fodeur Cou",
+            "email": "lefodeurcou@email.com"
+        }
+    ],
     "type": "package",
+    "require": {
+        "php": ">=8.0"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
         "phpbench/phpbench": "^1.0"
     },
-    "authors": [
-        {
-            "name": "Le Fodeur Cou",
-            "email": "no@email.com"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Crazy\\": "core/"

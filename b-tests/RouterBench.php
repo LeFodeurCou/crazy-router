@@ -42,6 +42,7 @@ class RouterBench
 	 * @BeforeMethods("makeRouter")
      * @Revs(100000)
      * @Iterations(10)
+	 * @RetryThreshold(2.0)
      */
 	public function benchRouter()
 	{
@@ -65,6 +66,7 @@ class RouterBench
      * @Revs(100000)
      * @Iterations(10)
 	 * @ParamProviders("provideRoutes")
+	 * @RetryThreshold(2.0)
      */
 	public function benchAddManyRoutes(array $params)
 	{
