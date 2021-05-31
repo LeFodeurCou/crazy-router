@@ -4,7 +4,7 @@
 
 > Crazy-Router is just a router.
 
-It is designed to be as simple as possible and as faster as possible too.
+It is designed to be as simple as possible and as fast as possible too.
 
 -------------------
 ## 🔌 Installation
